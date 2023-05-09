@@ -2,17 +2,17 @@ import { Text, View } from "native-base";
 import { StyleSheet } from "react-native";
 
 
-const ExerciseScreen = () => {
+const DietScreen = () => {
 
     return (
         <View style={ styles.container }>
-            <Text>This is the exercise screen</Text>
+            <Text>This is the diet screen</Text>
         </View>
     );
 };
 
 
-export default ExerciseScreen;
+export default DietScreen;
 
 
 const styles = StyleSheet.create({

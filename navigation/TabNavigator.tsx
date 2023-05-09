@@ -5,14 +5,21 @@ import { RootStackParamList } from "./StackNavigator";
 import MainScreen from "../screens/main/MainScreen";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SleepScreen from "../screens/main/SleepScreen";
-import { useSafeArea } from "native-base";
+import { Icon, useSafeArea } from "native-base";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ExerciseScreen from "../screens/main/ExerciseScreen";
+import DietScreen from "../screens/main/DietScreen";
+import ProfileScreen from "../screens/main/ProfileScreen";
+
+import Ionicons from 'react-native-vector-icons/Ionicons';      // Seems to work on the application without error?
 
 
 export type RootTabParamList = {
     Main: undefined;
     Sleep: undefined;
+    Exercise: undefined;
+    Diet: undefined;
+    Profile: undefined;
 };
 
 
@@ -68,6 +75,30 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
                     tabBarLabel: "Exercise",
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="run" color={color} size={size} />
+                    )
+                }}
+            />
+
+            <Tab.Screen 
+                key="Diet"
+                name="Diet"
+                component={DietScreen}
+                options={{
+                    tabBarLabel: "Diet",
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="silverware-fork-knife" color={color} size={size} />
+                    )
+                }}
+            />
+
+            <Tab.Screen 
+                key="Profile"
+                name="Profile"
+                component={ProfileScreen}
+                options={{
+                    tabBarLabel: "Profile",
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="person" color={color} size={size} />
                     )
                 }}
             />
