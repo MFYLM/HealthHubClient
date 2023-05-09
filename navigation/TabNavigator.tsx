@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SleepScreen from "../screens/main/SleepScreen";
 import { useSafeArea } from "native-base";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ExerciseScreen from "../screens/main/ExerciseScreen";
 
 
 export type RootTabParamList = {
@@ -55,6 +56,18 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
                     tabBarLabel: "Sleep",
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="sleep" color={color} size={size} />
+                    )
+                }}
+            />
+
+            <Tab.Screen 
+                key="Exercise"
+                name="Exercise"
+                component={ExerciseScreen}
+                options={{
+                    tabBarLabel: "Exercise",
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="run" color={color} size={size} />
                     )
                 }}
             />

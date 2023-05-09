@@ -45,6 +45,11 @@ const linking = {
                     DietScreen: "diet",
                 },
             },
+            Profile: {
+                screens: {
+                    ProfileScreen: "profile",
+                },
+            },
         },
     },
     NotFound: '*',
