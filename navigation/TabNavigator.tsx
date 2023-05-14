@@ -1,17 +1,14 @@
-import { StyleSheet } from "react-native";
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./StackNavigator";
-import MainScreen from "../screens/main/MainScreen";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import SleepScreen from "../screens/main/SleepScreen";
-import { Icon, useSafeArea } from "native-base";
+import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ExerciseScreen from "../screens/main/ExerciseScreen";
-import DietScreen from "../screens/main/DietScreen";
-import ProfileScreen from "../screens/main/ProfileScreen";
-
-import Ionicons from 'react-native-vector-icons/Ionicons';      // Seems to work on the application without error?
+import DietScreen from "../screens/diet/DietScreen";
+import ExerciseScreen from "../screens/exercise/ExerciseScreen";
+import MainScreen from "../screens/main/MainScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+import SleepScreen from "../screens/sleep/SleepScreen";
+import { RootStackParamList } from "./StackNavigator";
 
 
 export type RootTabParamList = {
@@ -39,7 +36,7 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
         <Tab.Navigator
             initialRouteName="Main"
             screenOptions={{
-                
+                headerShown: false
             }}
             safeAreaInsets={insets}
         >
@@ -55,7 +52,7 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
                 }}
             />
 
-            <Tab.Screen 
+            <Tab.Screen
                 key="Sleep"
                 name="Sleep"
                 component={SleepScreen}
@@ -67,7 +64,7 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
                 }}
             />
 
-            <Tab.Screen 
+            <Tab.Screen
                 key="Exercise"
                 name="Exercise"
                 component={ExerciseScreen}
@@ -79,7 +76,7 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
                 }}
             />
 
-            <Tab.Screen 
+            <Tab.Screen
                 key="Diet"
                 name="Diet"
                 component={DietScreen}
@@ -91,7 +88,7 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
                 }}
             />
 
-            <Tab.Screen 
+            <Tab.Screen
                 key="Profile"
                 name="Profile"
                 component={ProfileScreen}
@@ -110,7 +107,7 @@ const TabNavigator = ({ navigation }: NativeStackScreenProps<RootStackParamList,
 export default TabNavigator;
 
 const styles = StyleSheet.create({
-    container: {
-
+    topBarStyle: {
+        
     }
 });

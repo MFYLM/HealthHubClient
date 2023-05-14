@@ -1,8 +1,9 @@
-import { Text, View } from "native-base";
-import { StyleSheet } from "react-native";
+import { Text } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { StackScreenProps } from "../../navigation/Navigation";
 
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }: StackScreenProps<"Profile">) => {
 
     return (
         <View style={ styles.container }>

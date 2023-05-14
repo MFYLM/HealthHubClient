@@ -1,8 +1,9 @@
-import { Text, View } from "native-base";
-import { StyleSheet } from "react-native";
+import { Text } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { StackScreenProps } from "../../navigation/Navigation";
 
 
-const DietScreen = () => {
+const DietScreen = ({ navigation }: StackScreenProps<"Diet">) => {
 
     return (
         <View style={ styles.container }>
