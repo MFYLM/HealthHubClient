@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import NotFoundScreen from "../screens/NotFound";
 import TabNavigator from "./TabNavigator";
 
 
@@ -19,6 +20,7 @@ const StackNavigator = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Root" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="NotFound" component={NotFoundScreen}  options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

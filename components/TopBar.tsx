@@ -7,18 +7,19 @@ import { RootTabParamList } from "../navigation/TabNavigator";
 interface TopBarProps<ScreenParams extends ParamListBase> {
     username: string,
     section: string,
+    isTop: boolean,
     navigation: NavigationProp<ScreenParams>
 };
 
 
 const TopBar = (props: TopBarProps<RootTabParamList>) => {
-    const { username, section } = props;
+    const { username, section, isTop, navigation } = props;
 
     const curTime: TimeString = timeToString(new Date());
 
     return (
         <Appbar.Header>
-            {  <Appbar.BackAction onPress={() => {}} />}
+            { !isTop ? <Appbar.BackAction onPress={() => {}} /> : <></>}
             <Appbar.Content title={`Good ${curTime.day}, ${username}`} />
             <Appbar.Action icon="calendar" onPress={() => console.log("access calendar view")} />
         </Appbar.Header>
