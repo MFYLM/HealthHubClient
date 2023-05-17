@@ -1,9 +1,15 @@
 import { Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-import { StackScreenProps } from "../../navigation/Navigation";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { RootTabParamList } from "../../navigation/TabNavigator";
 
 
-const DietScreen = ({ navigation }: StackScreenProps<"Diet">) => {
+interface DietScreenNavigationProp<ScreenParams extends ParamListBase> {
+    navigation: NavigationProp<ScreenParams>
+};
+
+
+const DietScreen = ({ navigation }: DietScreenNavigationProp<RootTabParamList>) => {
 
     return (
         <View style={ styles.container }>

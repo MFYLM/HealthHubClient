@@ -1,9 +1,16 @@
 import { Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { StackScreenProps } from "../../navigation/Navigation";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { RootTabParamList } from "../../navigation/TabNavigator";
 
 
-const ProfileScreen = ({ navigation }: StackScreenProps<"Profile">) => {
+interface ProfileScreenNavigationProp<ScreenParams extends ParamListBase> {
+    navigation: NavigationProp<ScreenParams>
+};
+
+
+const ProfileScreen = ({ navigation }: ProfileScreenNavigationProp<RootTabParamList>) => {
 
     return (
         <View style={ styles.container }>

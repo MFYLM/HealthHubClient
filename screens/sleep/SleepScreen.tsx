@@ -2,9 +2,16 @@ import { Text } from "react-native-paper";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { StackScreenProps } from "../../navigation/Navigation";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { RootTabParamList } from "../../navigation/TabNavigator";
 
 
-const SleepScreen = ({ navigation }: StackScreenProps<"Sleep">) => {
+interface SleepScreenNavigationProp<ScreenParams extends ParamListBase> {
+    navigation: NavigationProp<ScreenParams>
+};
+
+
+const SleepScreen = ({ navigation }: SleepScreenNavigationProp<RootTabParamList>) => {
 
     return (
         <View style={styles.container}>
