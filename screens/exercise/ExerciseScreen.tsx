@@ -1,9 +1,15 @@
 import { Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-import { StackScreenProps } from "../../navigation/Navigation";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { RootTabParamList } from "../../navigation/TabNavigator";
 
 
-const ExerciseScreen = ({ navigation }: StackScreenProps<"Exercise">) => {
+interface ExerciseScreenNavigationProp<ScreenParams extends ParamListBase> {
+    navigation: NavigationProp<ScreenParams>
+};
+
+
+const ExerciseScreen = ({ navigation }: ExerciseScreenNavigationProp<RootTabParamList>) => {
 
     return (
         <View style={ styles.container }>
