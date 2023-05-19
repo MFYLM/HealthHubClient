@@ -1,4 +1,4 @@
-import { Text } from "react-native-paper";
+import { Text, Button } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { RootTabParamList } from "../../navigation/TabNavigator";
@@ -14,6 +14,9 @@ const DietScreen = ({ navigation }: DietScreenNavigationProp<RootTabParamList>) 
     return (
         <View style={ styles.container }>
             <Text>This is the diet screen</Text>
+            <Button mode="contained" onPress={() => navigation.navigate('MealOptionOne', { name: "abc" })}>
+        Go to first meal option
+      </Button>
         </View>
     );
 };
