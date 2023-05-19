@@ -3,6 +3,7 @@ import { TimeString, timeToString } from "../utils/helpers/time";
 import { Appbar } from "react-native-paper";
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { RootTabParamList } from "../navigation/TabNavigator";
+import { RootStackParamList } from "../navigation/StackNavigator";
 
 interface TopBarProps<ScreenParams extends ParamListBase> {
     username: string,
@@ -12,16 +13,16 @@ interface TopBarProps<ScreenParams extends ParamListBase> {
 };
 
 
-const TopBar = (props: TopBarProps<RootTabParamList>) => {
+const TopBar = (props: TopBarProps<RootStackParamList>) => {
     const { username, section, isTop, navigation } = props;
 
     const curTime: TimeString = timeToString(new Date());
 
     return (
         <Appbar.Header>
-            { !isTop ? <Appbar.BackAction onPress={() => {}} /> : <></>}
-            <Appbar.Content title={`Good ${curTime.day}, ${username}`} />
-            <Appbar.Action icon="calendar" onPress={() => console.log("access calendar view")} />
+            { !isTop ? <Appbar.BackAction onPress={() => navigation.goBack()} /> : <></> }
+            <Appbar.Content title={`Good ${curTime.hours}, ${username}`} />
+            <Appbar.Action icon="calendar" onPress={() => { console.log("abc"); }} />
         </Appbar.Header>
     );
 };

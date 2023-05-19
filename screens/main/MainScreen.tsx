@@ -1,9 +1,9 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
-import RecommendationCard from "../../components/RecommendatoinCard";
 import TopBar from "../../components/TopBar";
-import { RootTabParamList } from "../../navigation/TabNavigator";
+import RecommendationCard from "../../components/main/RecommendatoinCard";
+import { RootStackParamList } from "../../navigation/StackNavigator";
 
 
 interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -11,29 +11,38 @@ interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
 };
 
 
-const MainScreen = ({ navigation }: MainScreenNavigationProp<RootTabParamList>) => {
-
+const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>) => {
+    // TODO: retrieve recommendations 
 
     return (
         <View style={styles.container}>
             <TopBar username="Fake User" section="main" navigation={navigation} isTop />
-            <View style={ styles.cardView }>
+            <ScrollView contentContainerStyle={ styles.cardView }>
                 <Text style={{ fontSize: 20, marginTop: 10 }}>
                     Here are today's recommendations
                 </Text>
                 <RecommendationCard 
-                    title="test title"
+                    title="Sleep"
                     content="this is a test content to display"
-                    iconName="camera"
-                    cardAction={() => {}}
+                    iconName="weather-night"
+                    color="#1EBAEA"
+                    navigation={navigation}
                 />
                 <RecommendationCard 
-                    title="test title"
+                    title="Exercise"
                     content="this is a test content to display"
-                    iconName="camera"
-                    cardAction={() => {}}
+                    iconName="dumbbell"
+                    color="#FF9D00"
+                    navigation={navigation}
                 />
-            </View>
+                <RecommendationCard 
+                    title="Diet"
+                    content="this is a test content to display"
+                    iconName="food"
+                    color="#F9E770"
+                    navigation={navigation}
+                />
+            </ScrollView>
         </View>
     );
 };
@@ -50,6 +59,6 @@ const styles = StyleSheet.create({
     },
     cardView: {
         alignItems: "center",
-        gap: 20
+        gap: 12
     }
 });
