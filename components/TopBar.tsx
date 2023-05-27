@@ -22,7 +22,6 @@ const TopBar = (props: TopBarProps<RootStackParamList>) => {
         <Appbar.Header>
             { !isTop ? <Appbar.BackAction onPress={() => navigation.goBack()} /> : <></> }
             <Appbar.Content title={`Good ${curTime.hours}, ${username}`} />
-            <Appbar.Action icon="calendar" onPress={() => { console.log("abc"); }} />
         </Appbar.Header>
     );
 };
