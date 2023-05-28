@@ -1,5 +1,4 @@
 import { View, StyleSheet } from "react-native";
-import ScreenView from "../components/ScreenView";
 import { Text } from "react-native-paper";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/StackNavigator";

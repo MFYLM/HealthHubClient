@@ -21,21 +21,21 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
                 <Text style={{ fontSize: 20, marginTop: 10 }}>
                     Here are today's recommendations
                 </Text>
-                <RecommendationCard 
+                <RecommendationCard
                     title="Sleep"
                     content="this is a test content to display"
                     iconName="weather-night"
                     color="#1EBAEA"
                     navigation={navigation}
                 />
-                <RecommendationCard 
+                <RecommendationCard
                     title="Exercise"
                     content="this is a test content to display"
                     iconName="dumbbell"
                     color="#FF9D00"
                     navigation={navigation}
                 />
-                <RecommendationCard 
+                <RecommendationCard
                     title="Diet"
                     content="this is a test content to display"
                     iconName="food"
