@@ -4,6 +4,11 @@ import { Text } from "react-native-paper";
 import TopBar from "../../components/TopBar";
 import RecommendationCard from "../../components/main/RecommendatoinCard";
 import { RootStackParamList } from "../../navigation/StackNavigator";
+import { useQuery } from "react-query";
+import { fetchRecommendations } from "../../apiFunctions";
+import { User1 } from "../../utils/samples/sampleUsers";
+import { useEffect } from "react";
+import { LOCAL_HOST, axios } from "../../utils/axios";
 
 
 interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -12,7 +17,41 @@ interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
 
 
 const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>) => {
-    // TODO: retrieve recommendations 
+    // TODO: retrieve recommendations
+    const sessionId = User1.id;
+
+    // This function send a get request to the target url (API endpoint)
+    useEffect(() => {
+        const testFetch = async () => {
+            const res = await axios.get(`${LOCAL_HOST}/users/login`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": sessionId
+                }
+            });
+
+            return res;
+        };
+
+
+        const res = testFetch().catch((err) => console.log("err: ", err));
+        console.log(res);
+    }, []);
+
+    const { refetch: refetchRecommendations } = useQuery(
+        ["fetch-recommendations"],
+        fetchRecommendations,
+        {
+            enabled: false,
+            onError: (err) => {
+                
+            },
+            onSuccess: (data) => {
+                
+            },
+        }
+    );
+
 
     return (
         <View style={styles.container}>
