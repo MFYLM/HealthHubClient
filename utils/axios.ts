@@ -4,8 +4,8 @@ const axios = realAxios.create({
     withCredentials: true,
 });
 
-const IP = "169.234.75.96";                   // replace this with your local IP address
-const LOCAL_HOST = `http://${IP}:8000`;
+const SERVER_IP = `144.126.210.142`;
+const SERVER_HOST = `http://${SERVER_IP}:80`;
 
 
-export { axios, LOCAL_HOST };
+export { axios, SERVER_HOST };

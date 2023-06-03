@@ -8,7 +8,7 @@ import { useQuery } from "react-query";
 import { fetchRecommendations } from "../../apiFunctions";
 import { User1 } from "../../utils/samples/sampleUsers";
 import { useEffect } from "react";
-import { LOCAL_HOST, axios } from "../../utils/axios";
+import { SERVER_HOST, axios } from "../../utils/axios";
 
 
 interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -20,16 +20,24 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
     // TODO: retrieve recommendations
     const sessionId = User1.id;
 
-    // This function send a get request to the target url (API endpoint)
+    // This function send a post request to the target url (API endpoint)
     useEffect(() => {
         const testFetch = async () => {
-            const res = await axios.get(`${LOCAL_HOST}/users/login`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": sessionId
-                }
-            });
-
+            const res = await axios({
+				url: `${SERVER_HOST}/users/login`,
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					'session-id': sessionId
+				},
+				data: {
+					email: 'testemail@uci.edu',
+					password: 'password123'
+				}
+			});
+			
+			console.log(res.data);
+			
             return res;
         };
 
