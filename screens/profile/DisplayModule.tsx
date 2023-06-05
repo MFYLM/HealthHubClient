@@ -7,13 +7,11 @@ import TopBar from "../../components/TopBar";
 import { Appbar, Text } from "react-native-paper";
 import { RootStackParamList } from "../../navigation/StackNavigator";
 import { NavigationProp, ParamListBase, RouteProp, useNavigation } from "@react-navigation/native";
-import { RootTabParamList } from "../../navigation/TabNavigator";
-import App from "../../App";
 
 
 interface DisplayModuleProps {
-    moduleName: string
-}
+    moduleName: string;
+};
 
 type DisplayModuleRouteProp = RouteProp<RootStackParamList, 'DisplayModule'>;
 

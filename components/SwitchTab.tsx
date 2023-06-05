@@ -21,7 +21,7 @@ const SwitchTab = (props: SwitchTabProps) => {
 
     return (
         <View style={{ alignItems: "center", marginTop: 5 }}>
-            <SegmentedButtons 
+            <SegmentedButtons
                 value={value}
                 onValueChange={setValue}
                 buttons={buttonStructure}

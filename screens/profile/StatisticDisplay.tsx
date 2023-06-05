@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { LineChart, BarChart } from "react-native-chart-kit";
+import { VictoryChart, VictoryBar, VictoryLine, VictoryLegend } from "victory-native";
 import { Dimensions } from "react-native";
 
 
@@ -16,91 +16,30 @@ const AnalysisDisplay = (props: AnalysisDisplayProps) => {
 
 
     return (
-        <>
+        <VictoryChart>
             {
                 charType === "line" ?
-                    <LineChart
-                        data={{
-                            labels: labels,
-                            datasets: [
-                                {
-                                    data: data
-                                }
-                            ]
-                        }}
-                        width={Dimensions.get("window").width - 4}
-                        height={300}
-                        yAxisLabel="$"
-                        yAxisSuffix="k"
-                        yAxisInterval={1} // optional, defaults to 1
-                        chartConfig={{
-                            backgroundColor: "#e26a00",
-                            backgroundGradientFrom: "#fb8c00",
-                            backgroundGradientTo: "#ffa726",
-                            decimalPlaces: 2, // optional, defaults to 2dp
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-                            },
-                            propsForDots: {
-                                r: "6",
-                                strokeWidth: "2",
-                                stroke: "#ffa726"
-                            }
-                        }}
-                        style={{
-                            marginVertical: 8,
-                            borderRadius: 20,
-                            marginHorizontal: 2
-                        }}
+                    <VictoryBar
+                        data={[
+                            { x: "cat", y: 10 },
+                            { x: "dog", y: 25 },
+                            { x: "bird", y: 40 },
+                            { x: "frog", y: 50 },
+                            { x: "fish", y: 50 }
+                        ]}
                     />
                     :
-                    <BarChart
-                        data={{
-                            labels: ["January", "February", "March", "April", "May", "June"],
-                            datasets: [
-                                {
-                                    data: [
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100
-                                    ]
-                                }
-                            ]
-                        }}
-                        width={Dimensions.get("window").width - 4}
-                        height={300}
-                        yAxisLabel="$"
-                        yAxisSuffix="k"
-                        yAxisInterval={1} // optional, defaults to 1
-                        chartConfig={{
-                            backgroundColor: "#e26a00",
-                            backgroundGradientFrom: "#fb8c00",
-                            backgroundGradientTo: "#ffa726",
-                            decimalPlaces: 2, // optional, defaults to 2dp
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-                            },
-                            propsForDots: {
-                                r: "6",
-                                strokeWidth: "2",
-                                stroke: "#ffa726"
-                            }
-                        }}
-                        style={{
-                            marginVertical: 8,
-                            borderRadius: 20,
-                            marginHorizontal: 2
-                        }}
+                    <VictoryBar
+                        data={[
+                            { x: "cat", y: 10 },
+                            { x: "dog", y: 25 },
+                            { x: "bird", y: 40 },
+                            { x: "frog", y: 50 },
+                            { x: "fish", y: 50 }
+                        ]}
                     />
             }
-        </>
+        </VictoryChart>
     );
 };
 
