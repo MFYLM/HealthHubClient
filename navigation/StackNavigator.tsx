@@ -3,15 +3,12 @@ import NotFoundScreen from "../screens/NotFound";
 import TabNavigator from "./TabNavigator";
 import RecommendDetail from "../screens/main/RecommendDetail";
 import { NavigationProp } from "@react-navigation/native";
-import MealOptionOne from "../screens/diet/MealOptionOne";
-
 
 // add screens here to allow user to navigate through
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
     RecommendDetail: { category: string };
-    MealOptionOne: { name: string }
 };
 
 /**
@@ -27,7 +24,6 @@ const StackNavigator = () => {
             <Stack.Screen name="Root" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="NotFound" component={NotFoundScreen}  options={{ headerShown: false }} />
             <Stack.Screen name="RecommendDetail" component={RecommendDetail} options={{ headerShown: false, presentation: "modal" }}/>
-            <Stack.Screen name="MealOptionOne" component={MealOptionOne} options={{ headerShown: false, presentation: "modal" }}/>
 
         </Stack.Navigator>
     );
