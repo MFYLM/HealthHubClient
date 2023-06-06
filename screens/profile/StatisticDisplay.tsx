@@ -1,42 +1,35 @@
 import { useQuery } from "react-query";
-import { VictoryChart, VictoryBar, VictoryLine, VictoryLegend } from "victory-native";
+import { VictoryChart, VictoryBar, VictoryLine, VictoryLegend, VictoryTheme } from "victory-native";
 import { Dimensions } from "react-native";
+import { processData } from "../../utils/helpers/time";
 
 
 interface AnalysisDisplayProps {
     charType: string,
     labels: string[],
-    data: number[]
+    values: number[]
 };
 
 
 const AnalysisDisplay = (props: AnalysisDisplayProps) => {
     // TODO: pagnation of backend
-    const { charType, labels, data } = props;
-
+    const { charType, labels, values } = props;
+    const data = processData(labels, values);
+    
 
     return (
-        <VictoryChart>
+        <VictoryChart
+            theme={VictoryTheme.grayscale}
+            domainPadding={{ x: 30 }}
+        >
             {
-                charType === "line" ?
+                charType === "bar" ?
                     <VictoryBar
-                        data={[
-                            { x: "cat", y: 10 },
-                            { x: "dog", y: 25 },
-                            { x: "bird", y: 40 },
-                            { x: "frog", y: 50 },
-                            { x: "fish", y: 50 }
-                        ]}
+                        data={data}
                     />
                     :
-                    <VictoryBar
-                        data={[
-                            { x: "cat", y: 10 },
-                            { x: "dog", y: 25 },
-                            { x: "bird", y: 40 },
-                            { x: "frog", y: 50 },
-                            { x: "fish", y: 50 }
-                        ]}
+                    <VictoryLine
+                        data={data}
                     />
             }
         </VictoryChart>

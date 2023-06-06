@@ -5,10 +5,12 @@ import RecommendDetail from "../screens/main/RecommendDetail";
 import { NavigationProp } from "@react-navigation/native";
 import DisplayModule from "../screens/profile/DisplayModule";
 import UserDetail, { UserInfo } from "../screens/profile/UserDetail";
+import LoginScreen from "../screens/login/LoginScreen";
 
 
 // add screens here to allow user to navigate through
 export type RootStackParamList = {
+    Login: undefined;
     Root: undefined;
     NotFound: undefined;
     RecommendDetail: { category: string };
@@ -26,6 +28,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const StackNavigator = () => {
     return (
         <Stack.Navigator>
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Root" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="NotFound" component={NotFoundScreen}  options={{ headerShown: false }} />
             <Stack.Screen name="RecommendDetail" component={RecommendDetail} options={{ headerShown: false, presentation: "modal" }}/>
@@ -33,7 +36,7 @@ const StackNavigator = () => {
             <Stack.Screen name="UserDetail" component={UserDetail} options={{ headerShown: false, animation: "slide_from_left" }} />
         </Stack.Navigator>
     );
-}
+};
 
 
 export default StackNavigator;

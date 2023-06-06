@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import SwitchTab, { btnStruct } from "../../components/SwitchTab";
 import AnalysisDisplay from "./StatisticDisplay";
@@ -7,6 +7,7 @@ import TopBar from "../../components/TopBar";
 import { Appbar, Text } from "react-native-paper";
 import { RootStackParamList } from "../../navigation/StackNavigator";
 import { NavigationProp, ParamListBase, RouteProp, useNavigation } from "@react-navigation/native";
+import { useQuery } from "react-query";
 
 
 interface DisplayModuleProps {
@@ -61,6 +62,21 @@ const DisplayModule = ({ route }: { route: DisplayModuleRouteProp }) => {
         Math.random() * 100,
         Math.random() * 100
     ]);
+
+
+    // const { refetch: refetchEventData } = useQuery(
+    //     ["fetch-event-data"],
+    //     {
+            
+    //     }
+    // );
+
+    useEffect(() => {
+        console.log("rerender component");
+
+    }, [value]);
+
+
     const navigation = useNavigation();
 
 
@@ -79,8 +95,7 @@ const DisplayModule = ({ route }: { route: DisplayModuleRouteProp }) => {
                 <AnalysisDisplay
                     charType="line"
                     labels={labels}
-                    data={data
-                    }
+                    values={data}
                 />
             </ScrollView>
         </View>
