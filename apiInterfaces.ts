@@ -1,26 +1,51 @@
 // define data models here
 // NOTE: All interfaces that follow with `Data` are retrieved from backend
-export interface FetchEventInput {
+
+interface Root {
+    session: string;
+};
+
+
+// Users
+export interface UserLoginInput extends Root {
+    email: string;
+    password: string;
+};
+
+export interface UserSettingInput extends Root {
+    settingName: string;
+    data: any;
+};
+
+export interface UserSettingData extends Root {
+    sex: string;
+    weight: number;
+
+};
+
+
+// Events
+export interface FetchEventInput extends Root {
     type: string;
     userId: string;
     minTimeStamp: number;
     maxTimeStamp: number;
 };
 
+export interface DataPoint extends Root {
+    timestamp: number;
+    value: number;
+};
 
-export interface EventData {
-
+export interface EventData extends Root {
+    data: DataPoint[];
 };
 
 
-export interface UserSettingInput {
-    settingName: string;
-    data: any;
-};
 
-
-export interface UserSettingData {
-    sex: string;
-    weight: number;
-
+// Recommendation
+export interface Recommendation extends Root {
+    type: string;
+    name: string;
+    duration: number;      // in seconds / minutes?
 };

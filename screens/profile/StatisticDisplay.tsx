@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { VictoryChart, VictoryBar, VictoryLine, VictoryLegend, VictoryTheme } from "victory-native";
 import { Dimensions } from "react-native";
-import { processData } from "../../utils/helpers/time";
+import { processData } from "../../utils/helpers/data";
 
 
 interface AnalysisDisplayProps {
@@ -15,7 +15,7 @@ const AnalysisDisplay = (props: AnalysisDisplayProps) => {
     // TODO: pagnation of backend
     const { charType, labels, values } = props;
     const data = processData(labels, values);
-    
+
 
     return (
         <VictoryChart

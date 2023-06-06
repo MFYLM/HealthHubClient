@@ -1,13 +1,16 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import CircularProgress from "react-native-circular-progress-indicator";
+import { ActivityIndicator, Text } from "react-native-paper";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import { useQuery } from "react-query";
-import { fetchRecommendations, testFetch } from "../../apiFunctions";
+import { fetchRecommendations } from "../../apiFunctions";
 import TopBar from "../../components/TopBar";
 import RecommendationCard from "../../components/main/RecommendatoinCard";
 import { RootStackParamList } from "../../navigation/StackNavigator";
 import { User1 } from "../../utils/samples/sampleUsers";
-import CircularProgress from "react-native-circular-progress-indicator";
+import { RefreshControl } from "react-native";
 
 
 interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -18,9 +21,10 @@ interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
 const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>) => {
     // TODO: retrieve recommendations
     const sessionId = User1.id;
+    const [refreshing, setRreshing] = useState(false);
+
 
     // This function send a get request to the target url (API endpoint)
-
     const { refetch: refetchRecommendations } = useQuery(
         ["fetch-recommendations"],
         fetchRecommendations,
@@ -35,10 +39,25 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
     );
 
 
+    const handleRefresh = () => {
+        setRreshing(true);
+        refetchRecommendations();
+        setRreshing(false);
+    };
+
+
     return (
         <View style={styles.container}>
             <TopBar username="Fake User" section="main" navigation={navigation} isTop />
-            <ScrollView contentContainerStyle={ styles.cardView }>
+            <ScrollView 
+                contentContainerStyle={ styles.cardView }
+                refreshControl={
+                    <RefreshControl 
+                        refreshing={refreshing}
+                        onRefresh={handleRefresh}
+                    />
+                }
+            >
                 <View style={{ flex: 1, flexDirection: "row", width: "95%", marginTop: 10 }}>
                     <CircularProgress
                         value={80}
