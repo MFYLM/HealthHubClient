@@ -1,44 +1,62 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { ProgressChart } from "react-native-chart-kit";
+import { View, Text } from 'react-native';
+import Svg, { Circle } from 'react-native-svg';
 
-const ExerciseProgress = ({ minsExercised, caloriesBurned }) => {
-  const data = {
-    data: [minsExercised / 60, caloriesBurned / 1000],
-  };
-  const chartConfig = {
-    backgroundGradientFrom: '#556379',
-    backgroundGradientTo: '#556379',
-    color: (opacity = 1) => `rgba(96, 207, 255, ${opacity})`,
-    strokeWidth: 2,
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false,
-    style: {
-        borderRadius: 16,
-    },
-    label: ["Deep Sleep", "Shallow Sleep"]
-};
+
+const circleSize = 250;
+const circleWidth = 20;
+
+const ExerciseProgress = ({ minsExercised, totalMinsExercised }) => {
+
+  const circleRadius = circleSize / 2 - circleWidth / 2;
+
+  const circumference = 2 * Math.PI * circleRadius;
+  const progress = (minsExercised / totalMinsExercised) * circumference;
 
   return (
-    <View style={styles.container}>
-      <ProgressChart
-        data={data}
-        width={200}
-        height={200}
-        strokeWidth={16}
-        radius={80}
-        chartConfig={chartConfig}
-        hideLegend
-      />
+    <View style={styles.contentContainer}>
+      <Svg width={circleSize} height={circleSize}>
+        <Circle
+          cx={circleSize / 2}
+          cy={circleSize / 2}
+          r={circleRadius}
+          fill="#ffdfab"
+          stroke='#fff8ed'
+          strokeWidth={circleWidth}
+        />
+        <Circle
+          cx={circleSize / 2}
+          cy={circleSize / 2}
+          r={circleRadius}
+          fill="transparent"
+          stroke="#FF9D00"
+          strokeWidth={circleWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset={circumference - progress}
+          transform={`rotate(-90, ${circleSize/2}, ${circleSize/2})`}
+          strokeLinecap="round"
+        />
+      </Svg>
+      <Text style={styles.exerciseMinsText}>
+        {`${minsExercised} / ${totalMinsExercised}\n`} minutes exercised
+        </Text>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = {
+    contentContainer: {
+    },
+    exerciseMinsText: {
+        position: 'absolute',
+        top: circleSize / 2 - 30,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: "#000000",
+    },
+  };
 
 export default ExerciseProgress;
