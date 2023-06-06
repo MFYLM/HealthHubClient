@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { SegmentedButtons } from "react-native-paper";
 
 
-interface btnStruct {
+export interface btnStruct {
     value: string,
     label: string,
 };
@@ -11,21 +11,21 @@ interface btnStruct {
 
 interface SwitchTabProps {
     value: string,
-    setValue: () => {},
-    buttonStructure: btnStruct[]
+    setValue: Dispatch<SetStateAction<string>>,
+    buttonStructure: btnStruct[],
 };
 
 
 const SwitchTab = (props: SwitchTabProps) => {
-
     const { value, setValue, buttonStructure } = props;
 
     return (
-        <View>
-            <SegmentedButtons 
+        <View style={{ alignItems: "center", marginTop: 10 }}>
+            <SegmentedButtons
                 value={value}
                 onValueChange={setValue}
                 buttons={buttonStructure}
+                style={{ width: "90%", height: 40 }}
             />
         </View>
     );

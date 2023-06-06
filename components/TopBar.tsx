@@ -13,7 +13,7 @@ interface TopBarProps<ScreenParams extends ParamListBase> {
 };
 
 
-const TopBar = (props: TopBarProps<RootStackParamList>) => {
+const TopBar = (props: TopBarProps<RootStackParamList> | TopBarProps<RootTabParamList>) => {
     const { username, section, isTop, navigation } = props;
 
     const curTime: TimeString = timeToString(new Date());
