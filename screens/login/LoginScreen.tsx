@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }: LoginScreenNavigationProp<RootStackParamLis
                 <TextInput 
                     label={"Password"}
                     value={password}
-                    onChangeText={(text) => setEmail(text)}
+                    onChangeText={(text) => setPassword(text)}
                     style={{ backgroundColor: "white" }}
                     onBlur={ Keyboard.dismiss }
                 />
