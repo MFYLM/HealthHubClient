@@ -7,7 +7,6 @@ import { RootTabParamList } from "../../navigation/TabNavigator";
 import ExerciseCircle from "../../components/ExerciseCircle";
 import ExerciseOptions from "../../components/ExerciseOptions";
 import { fetchExerciseInfo } from "../../apiFunctions";
-import { User1 } from "../../utils/samples/sampleUsers";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
@@ -27,7 +26,7 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenNavigationProp<RootTabPara
 
   const {} = useQuery(
     ["fetch-exercise-info"],
-    fetchExerciseInfo("7db66fe3-4e41-440d-94a7-06b91febe289"),
+    fetchExerciseInfo("a47efe59-f0eb-4915-b689-1a8a6a9fdba2"),
     {
         onError: (err) => {
             console.log("err:", err);

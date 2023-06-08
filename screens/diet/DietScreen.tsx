@@ -26,15 +26,12 @@ const DietScreen = () => {
 
     const {} = useQuery(
       ["fetch-meal-info"],
-      fetchMealInfo("7db66fe3-4e41-440d-94a7-06b91febe289"),
+      fetchMealInfo("a47efe59-f0eb-4915-b689-1a8a6a9fdba2"),
       {
           onError: (err) => {
               console.log("err:", err);
           },
           onSuccess: (data) => {
-              // console.log(data);
-              // console.log(data["scoreNumerator"]);
-              // console.log(data["plan"]["name"]);
               setPlan(data["plan"]["name"]);
               setValue(data["plan"]["value"]);
               setCurrentCalorieCount(data["scoreNumerator"]);
@@ -42,9 +39,6 @@ const DietScreen = () => {
           },
       }
     );
-
-
-    // const currentCalorieCount = 1500;
 
     
       return (
@@ -71,14 +65,9 @@ const DietScreen = () => {
               onPress={() => {
                 // Handle onPress event
                 console.log(`Clicked on previous plan ${plan}`);
-                // setCurrentCalorieCount(currentCalorieCount + option.calories);
               }}
             />          
 
-          {/* <ProgressBar
-            currentCalorieCount={currentCalorieCount}
-            totalCalorieCount={totalCalorieCount}
-          /> */}
         </View>
       );
 };
