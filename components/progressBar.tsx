@@ -31,13 +31,14 @@ const progressBar = ({ currentCalorieCount, totalCalorieCount }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    width: '80%',
+    width: '90%',
     height: 50,
     borderRadius: 20,
     backgroundColor: '#E0E0E0',
     overflow: 'hidden',
-    marginBottom: 100,
-    marginTop: 50,
+    marginBottom: 0,
+    marginTop: 0,
+    marginLeft: 16,
     alignItems: 'flex-start'
   },
   progressBar: {

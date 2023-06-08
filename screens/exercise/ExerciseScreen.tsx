@@ -6,6 +6,11 @@ import { RootTabParamList } from "../../navigation/TabNavigator";
 
 import ExerciseCircle from "../../components/ExerciseCircle";
 import ExerciseOptions from "../../components/ExerciseOptions";
+import { fetchExerciseInfo } from "../../apiFunctions";
+import { User1 } from "../../utils/samples/sampleUsers";
+import { useState } from "react";
+import { useQuery } from "react-query";
+
 
 
 interface ExerciseScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -15,25 +20,30 @@ interface ExerciseScreenNavigationProp<ScreenParams extends ParamListBase> {
 
 const ExerciseScreen = ({ navigation }: ExerciseScreenNavigationProp<RootTabParamList>) => {
 
-  const exerciseOptions = [
-      {
-        exerciseName: 'Exercise Option 1',
-        duration: 'Duration for exercise 1.',
-      },
-      {
-        exerciseName: 'Exercise Option 2',
-        duration: 'Duration for exercise 2.',
-      },
-      {
-        exerciseName: 'Exercise Option 3',
-        duration: 'Duration for exercise 3.',
-      },
-    ];
+  const [plan, setPlan] = useState("");
+  const [value, setValue] = useState(0);
+  const [minutesExercised, setMinutesExercised] = useState(0);
+  const [totalMinutesExercised, setTotalMinutesExercised] = useState(0);
 
+  const {} = useQuery(
+    ["fetch-exercise-info"],
+    fetchExerciseInfo("7db66fe3-4e41-440d-94a7-06b91febe289"),
+    {
+        onError: (err) => {
+            console.log("err:", err);
+        },
+        onSuccess: (data) => {
+            console.log(data);
+            console.log(data["scoreNumerator"]);
+            console.log(data["plan"]["name"]);
+            setPlan(data["plan"]["name"]);
+            setValue(data["plan"]["value"]);
+            setMinutesExercised(data["scoreNumerator"]);
+            setTotalMinutesExercised(data["scoreDenominator"]);
+        },
+    }
+  );
 
-    const minutesExercised = 20;
-    const totalMinutesExercised = 60;
-    // const caloriesBurned = 300;
   
     return (
       <View style={styles.container}>
@@ -48,17 +58,14 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenNavigationProp<RootTabPara
             />
         </Card>
 
-        {exerciseOptions.map((choice) => (
-            <ExerciseOptions
-              key={choice.exerciseName}
-              exerciseName={choice.exerciseName}
-              duration={choice.duration}
+        <ExerciseOptions
+              exerciseName={plan}
+              duration={value}
               onPress={() => {
                 // Handle onPress event
-                console.log(`Clicked on exercise option ${exerciseOptions[0].exerciseName}`);
+                console.log(`Clicked on exercise option ${plan}`);
               }}
             />
-          ))}
 
       </View>
     );
@@ -81,6 +88,7 @@ const styles = StyleSheet.create({
       height: 300,
       width: 350,
       backgroundColor: "#ffdfab",
+      borderRadius: 50,
     },
     exerciseTitle: {
       fontSize: 30,

@@ -4,6 +4,14 @@ import MealOptionCard from "../../components/mealOptionCard";
 import { useNavigation } from '@react-navigation/native';
 import ProgressBar from "../../components/progressBar";
 
+import { fetchMealInfo } from "../../apiFunctions";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { Card } from "react-native-paper";
+
+
+
+
 interface DietScreenNavigationProp<ScreenParams extends ParamListBase> {
     navigation: NavigationProp<ScreenParams>
 };
@@ -11,26 +19,32 @@ interface DietScreenNavigationProp<ScreenParams extends ParamListBase> {
 const DietScreen = () => {
     const navigation = useNavigation();
 
-    const mealOptions = [
-        {
-          id: 1,
-          mealName: 'Meal Option 1',
-          calories: 'Calories for meal 1.',
-        },
-        {
-          id: 2,
-          mealName: 'Meal Option 2',
-          calories: 'Calories for meal 2.',
-        },
-        {
-          id: 3,
-          mealName: 'Meal Option 3',
-          calories: 'Calories for meal 3.',
-        },
-      ];
+    const [plan, setPlan] = useState("");
+    const [value, setValue] = useState(0);
+    const [currentCalorieCount, setCurrentCalorieCount] = useState(0);
+    const [totalCalorieCount, setTotalCalorieCount] = useState(0);
 
-    const currentCalorieCount = 1500;
-    const totalCalorieCount = 2000;
+    const {} = useQuery(
+      ["fetch-meal-info"],
+      fetchMealInfo("7db66fe3-4e41-440d-94a7-06b91febe289"),
+      {
+          onError: (err) => {
+              console.log("err:", err);
+          },
+          onSuccess: (data) => {
+              // console.log(data);
+              // console.log(data["scoreNumerator"]);
+              // console.log(data["plan"]["name"]);
+              setPlan(data["plan"]["name"]);
+              setValue(data["plan"]["value"]);
+              setCurrentCalorieCount(data["scoreNumerator"]);
+              setTotalCalorieCount(data["scoreDenominator"]);
+          },
+      }
+    );
+
+
+    // const currentCalorieCount = 1500;
 
     
       return (
@@ -40,27 +54,26 @@ const DietScreen = () => {
           Recommended Meal Plan
         </Text>
 
-        <Text style={styles.calorieCounter}>
-          {currentCalorieCount} / {totalCalorieCount} calories
-        </Text>
+        <Card style={styles.progressCard}>
+          <Text style={styles.calorieCounter}>
+            {currentCalorieCount} / {totalCalorieCount} calories
+          </Text>
 
-        <ProgressBar
-            currentCalorieCount={currentCalorieCount}
-            totalCalorieCount={totalCalorieCount}
-        />
+          <ProgressBar
+              currentCalorieCount={currentCalorieCount}
+              totalCalorieCount={totalCalorieCount}
+          />
+        </Card>
 
-          {mealOptions.map((option) => (
-            <MealOptionCard
-              key={option.id}
-              id={option.id}
-              mealName={option.mealName}
-              calories={option.calories}
+        <MealOptionCard
+              mealName={plan}
+              calories={value}
               onPress={() => {
                 // Handle onPress event
-                console.log(`Clicked on meal option ${mealOptions[0].id}`);
+                console.log(`Clicked on previous plan ${plan}`);
+                // setCurrentCalorieCount(currentCalorieCount + option.calories);
               }}
-            />
-          ))}
+            />          
 
           {/* <ProgressBar
             currentCalorieCount={currentCalorieCount}
@@ -79,7 +92,6 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-end',
       alignItems: 'center',
-      backgroundColor: "#fffad6",
     },
     card: {
       position: 'absolute',
@@ -90,13 +102,21 @@ const styles = StyleSheet.create({
     calorieCounter: {
       fontSize: 25,
       textAlign: 'center',
-      paddingBottom: 10,
+      paddingBottom: 30,
+      paddingTop: 0,
       fontWeight: 'bold',
 
     },
     dietTitle: {
       fontSize: 30,
       fontWeight: 'bold',
-      paddingBottom: 60,
-    }
+      paddingBottom: 40,
+    },
+    progressCard: {
+      backgroundColor: "#F9E770",
+      height: 300,
+      width: 350,
+      borderRadius: 50,
+      justifyContent: 'center',
+    },
   });
