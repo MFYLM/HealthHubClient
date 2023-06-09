@@ -2,25 +2,25 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Button, Card, IconButton, Text } from "react-native-paper";
 import { RootStackParamList } from "../../navigation/StackNavigator";
+import { DietRecommendation, ExerciseRecommendation, SleepRecommendation } from "../../apiInterfaces";
 
 
 interface CardProps {
     title: string;
-    content: string;
     iconName: string;
     color: string;
     navigation: NavigationProp<RootStackParamList>;
+    recommendations: ExerciseRecommendation[] | SleepRecommendation[] | DietRecommendation[];
 };
 
 
 const RecommendationCard = (props: CardProps) => {
-    const { title, content, color, iconName, navigation } = props;
-
+    const { title, color, iconName, navigation, recommendations } = props;
 
     return (
         <Pressable
             style={ styles.container }
-            onPress={ () => { navigation.navigate("RecommendDetail", { category: title }) } }
+            onPress={ () => { navigation.navigate("RecommendDetail", { category: title, recommendations: recommendations }) } }
         >
             <View
                 style={ { ...styles.cardView, backgroundColor: color } }
@@ -29,9 +29,8 @@ const RecommendationCard = (props: CardProps) => {
                     <IconButton icon={iconName} disabled size={60} />
                 </View>
                 <View style={{ flex: 3 }}>
-                    <Card.Title titleStyle={{ fontSize: 20 }} title={title} />
                     <Card.Content>
-                        <Text variant="bodyMedium">{content}</Text>
+                        <Text>{`${title}`}</Text>
                     </Card.Content>
                 </View>
             </View>

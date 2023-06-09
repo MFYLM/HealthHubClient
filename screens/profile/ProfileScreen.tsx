@@ -1,10 +1,15 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { Text, Avatar, List } from "react-native-paper";
+import { Pressable, RefreshControl, ScrollView, StyleSheet, View } from "react-native";
+import { Text, Avatar, List, Chip, IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Surface } from "react-native-paper";
 import { RootStackParamList } from "../../navigation/StackNavigator";
-import { UserInfo } from "./UserDetail";
+import { useMutation, useQuery } from "react-query";
+import { fetchUserSettings, loginUser, logoutUser } from "../../apiFunctions";
+import { User1, User2 } from "../../utils/samples/sampleUsers";
+import { getSession } from "../../utils/helpers/session";
+import { useState } from "react";
+import { UserSettings } from "../../apiInterfaces";
 
 
 interface ProfileScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -13,65 +18,116 @@ interface ProfileScreenNavigationProp<ScreenParams extends ParamListBase> {
 
 
 const ProfileScreen = ({ navigation }: ProfileScreenNavigationProp<RootStackParamList>) => {
-    const defaultImageUri = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fvector%2Fuser-icon-flat-isolated-on-white-background-user-symbol-vector-illustration-gm1300845620-393045799&psig=AOvVaw21g4tsFP0kQ-7lccq3GFDR&ust=1684898045823000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCKi66MC8iv8CFQAAAAAdAAAAABAE";
     const insets = useSafeAreaInsets();
+    const session = User2.session;
+    const [settings, setSettings] = useState<UserSettings>({ email: "", sex: "", weight: 0, height: 0, allowedExercises: [] });
+    const [refreshing, setRreshing] = useState(false);
 
-    const user: UserInfo = {
-        name: "Fake User",
-        sex: "male",
-        email: "abc@abc.com",
-        height: 180,
-        age: 23,
-        weight: 72
+    const { } = useQuery(
+        ["fetch-session"],
+        getSession,
+        {
+            onError: (err) => {
+                console.log(err);
+            },
+            onSuccess: (data) => {
+                console.log("user session: ", data);
+            },
+        }
+    );
+
+    const { refetch: refetchUserInfo } = useQuery(
+        ["fetch-userinfo"],
+        fetchUserSettings(session),
+        {
+            enabled: false,
+            onError: (err) => {
+                console.log(err);
+            },
+            onSuccess: (data) => {
+                // console.log(data);
+                setSettings(data);
+            },
+        }
+    );
+
+
+    const { mutate: handleLogout } = useMutation(
+        ["logout-user"],
+        logoutUser(session),
+        {
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    );
+
+    
+    const handleRefresh = () => {
+        setRreshing(true);
+        refetchUserInfo();
+        setRreshing(false);
     };
 
 
     return (
-        <ScrollView style={{ ...styles.container, top: insets.top }}>
+        <ScrollView 
+            style={{ ...styles.container, top: insets.top }}
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={handleRefresh}
+                />
+            }
+        >
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 30 }}>
                 <Text style={{ fontSize: 40, fontWeight: "bold" }}>Summary</Text>
-                <Pressable onPress={() => navigation.navigate("UserDetail", { user: user })}><Avatar.Image size={50} source={{ uri: defaultImageUri }} /></Pressable>
+                <IconButton icon={"exit-to-app"} onPress={() => { handleLogout(); navigation.navigate("Login"); }}/>
             </View>
             <List.Section style={{ gap: 10 }}>
-                <List.Subheader style={ styles.subHeaderStyle }>Exercise</List.Subheader>
                 <List.Item
                     titleStyle={ styles.titleStyle }
-                    title="Walking + Running Distance"
+                    descriptionStyle={ styles.descriptionStyle }
+                    title="Email"
+                    description={settings.email}
                     style={ styles.listItemStyle }
-                    left={() => <List.Icon icon={"shoe-sneaker"} />}
-                    right={() => <List.Icon icon={"chevron-right"} />}
-                    onPress={() => navigation.navigate("DisplayModule", { moduleName: "Walking + Running Distance" })}
+                    left={() => <List.Icon icon={"email"} />}
                 />
                 <List.Item
+                    descriptionStyle={ styles.descriptionStyle }
                     titleStyle={ styles.titleStyle }
-                    title="Flights Climbed"
+                    title="Sex"
+                    description={settings.sex === "m" ? "Male" : "Female"}
                     style={ styles.listItemStyle }
-                    left={() => <List.Icon icon={"stairs"} />}
-                    right={() => <List.Icon icon={"chevron-right"} />}
-                    onPress={() => navigation.navigate("DisplayModule", { moduleName: "Flights Climbed" })}
+                    left={() => "m" === "m" ? <List.Icon icon={"gender-male"} /> : <List.Icon icon={"gender-female"} /> }
                 />
-
-                <List.Subheader style={ styles.subHeaderStyle }>Sleep</List.Subheader>
                 <List.Item
+                    descriptionStyle={ styles.descriptionStyle }
                     titleStyle={ styles.titleStyle }
-                    title="Sleep Duration"
+                    title="Weight"
+                    description={settings.weight}
                     style={ styles.listItemStyle }
-                    left={() => <List.Icon icon={"bed"} />}
-                    right={() => <List.Icon icon={"chevron-right"} />}
-                    onPress={() => navigation.navigate("DisplayModule", { moduleName: "Sleep Duration" })}
+                    left={() => <List.Icon icon={"weight-kilogram"} />}
                 />
-
-                <List.Subheader style={ styles.subHeaderStyle }>Diet</List.Subheader>
                 <List.Item
+                    descriptionStyle={ styles.descriptionStyle }
                     titleStyle={ styles.titleStyle }
-                    title="Energy Burned"
+                    title="Height"
+                    description={settings.height}
                     style={ styles.listItemStyle }
-                    left={() => <List.Icon icon={"fire"} />}
-                    right={() => <List.Icon icon={"chevron-right"} />}
-                    onPress={() => navigation.navigate("DisplayModule", { moduleName: "Energy Burned" })}
+                    left={() => <List.Icon icon={"human-male-height-variant"} />}
                 />
+                <List.Subheader style={ styles.subHeaderStyle }>Exercise Options</List.Subheader>
+                <View style={{ flexWrap: "wrap", flexDirection: "row", gap: 6 }}>
+                    {
+                        settings.allowedExercises.map((option, index) => 
+                            <Chip style={{  }} key={index} mode="flat" selected={option.trigger}>{option.name}</Chip>
+                        )
+                    }
+                </View>
                 
             </List.Section>
+
         </ScrollView>
     );
 };
@@ -108,7 +164,10 @@ const styles = StyleSheet.create({
     iconStyle: {
         
     },
-    titleStyle: {
+    descriptionStyle: {
         fontSize: 20,
+    },
+    titleStyle: {
+        fontSize: 15,
     }
 });

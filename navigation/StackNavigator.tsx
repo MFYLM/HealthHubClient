@@ -1,11 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { DietRecommendation, ExerciseRecommendation, SleepRecommendation } from "../apiInterfaces";
 import NotFoundScreen from "../screens/NotFound";
-import TabNavigator from "./TabNavigator";
-import RecommendDetail from "../screens/main/RecommendDetail";
-import { NavigationProp } from "@react-navigation/native";
-import DisplayModule from "../screens/profile/DisplayModule";
-import UserDetail, { UserInfo } from "../screens/profile/UserDetail";
 import LoginScreen from "../screens/login/LoginScreen";
+import RecommendDetail from "../screens/main/RecommendDetail";
+import DisplayModule from "../screens/profile/DisplayModule";
+import TabNavigator from "./TabNavigator";
 
 
 // add screens here to allow user to navigate through
@@ -13,9 +12,9 @@ export type RootStackParamList = {
     Login: undefined;
     Root: undefined;
     NotFound: undefined;
-    RecommendDetail: { category: string };
+    RecommendDetail: { category: string, recommendations: ExerciseRecommendation[] | SleepRecommendation[] | DietRecommendation[] };
     DisplayModule: { moduleName: string };
-    UserDetail: { user: UserInfo }
+    // UserDetail: { user: UserInfo }
 };
 
 /**
@@ -33,7 +32,7 @@ const StackNavigator = () => {
             <Stack.Screen name="NotFound" component={NotFoundScreen}  options={{ headerShown: false }} />
             <Stack.Screen name="RecommendDetail" component={RecommendDetail} options={{ headerShown: false, presentation: "modal" }}/>
             <Stack.Screen name="DisplayModule" component={DisplayModule} options={{ headerShown: false, animation: "slide_from_left" }} />
-            <Stack.Screen name="UserDetail" component={UserDetail} options={{ headerShown: false, animation: "slide_from_left" }} />
+            {/* <Stack.Screen name="UserDetail" component={UserDetail} options={{ headerShown: false, animation: "slide_from_left" }} /> */}
         </Stack.Navigator>
     );
 };

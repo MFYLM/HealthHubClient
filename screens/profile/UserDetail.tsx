@@ -6,64 +6,37 @@ import { RootStackParamList } from "../../navigation/StackNavigator";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
-export interface UserInfo {
-    name: string,
-    sex: string,
-    age: number,
-    weight: number,
-    email: string,
-    height: number
-};
-
-type UserDetailRouteProp = RouteProp<RootStackParamList, 'UserDetail'>;
-
-
-const UserDetail = ({ route }: { route: UserDetailRouteProp }) => {
+const UserDetail = ( ) => {
     const navigation = useNavigation();
     const insets = useSafeAreaInsets();
-    const { user } = route.params;
+    // const { sex, weight, height, email } = params;
 
 
     return (
         <View style={{ top: insets.top }}>
-            <Appbar>
-                <Appbar.BackAction onPress={() => navigation.goBack()}/>
-            </Appbar>
             <View style={{ marginHorizontal: 10, gap: 4, marginTop: 10 }}>
                 <Card>
-                    <Card.Title title="Name"/>
+                    <Card.Title title="Email"/>
                     <Card.Content>
-                        <Text style={{ fontSize: 20 }} >{user.name}</Text>
+                        <Text style={{ fontSize: 20 }} >{email}</Text>
                     </Card.Content>
                 </Card>
                 <Card>
                     <Card.Title title="Sex"/>
                     <Card.Content>
-                        <Text style={{ fontSize: 20 }} >{user.sex}</Text>
-                    </Card.Content>
-                </Card>
-                <Card>
-                    <Card.Title title="Email"/>
-                    <Card.Content>
-                        <Text style={{ fontSize: 20 }} >{user.email}</Text>
-                    </Card.Content>
-                </Card>
-                <Card>
-                    <Card.Title title="Age"/>
-                    <Card.Content>
-                        <Text style={{ fontSize: 20 }} >{user.age}</Text>
+                        <Text style={{ fontSize: 20 }} >{sex}</Text>
                     </Card.Content>
                 </Card>
                 <Card>
                     <Card.Title title="Weight"/>
                     <Card.Content>
-                        <Text style={{ fontSize: 20 }} >{`${user.weight} kg`}</Text>
+                        <Text style={{ fontSize: 20 }} >{`${weight} kg`}</Text>
                     </Card.Content>
                 </Card>
                 <Card>
                     <Card.Title title="Height"/>
                     <Card.Content>
-                        <Text style={{ fontSize: 20 }} >{`${user.height} cm`}</Text>
+                        <Text style={{ fontSize: 20 }} >{`${height} cm`}</Text>
                     </Card.Content>
                 </Card>                
             </View>

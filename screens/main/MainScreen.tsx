@@ -1,16 +1,15 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 import CircularProgress from "react-native-circular-progress-indicator";
-import { ActivityIndicator, Text } from "react-native-paper";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Text } from "react-native-paper";
 import { useQuery } from "react-query";
-import { fetchRecommendations } from "../../apiFunctions";
+import { fetchLifestyleScore, fetchRecommendations } from "../../apiFunctions";
+import { DietRecommendation, ExerciseRecommendation, SleepRecommendation } from "../../apiInterfaces";
 import TopBar from "../../components/TopBar";
 import RecommendationCard from "../../components/main/RecommendatoinCard";
 import { RootStackParamList } from "../../navigation/StackNavigator";
-import { User1 } from "../../utils/samples/sampleUsers";
-import { RefreshControl } from "react-native";
+import { User1, User2 } from "../../utils/samples/sampleUsers";
 
 
 interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -20,20 +19,46 @@ interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
 
 const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>) => {
     // TODO: retrieve recommendations
-    const sessionId = User1.id;
+    const sessionId = User2.session;
+
+    const [exerciseRecommendations, setExerciseRecommendations] = useState<ExerciseRecommendation[]>([]);
+    const [sleepRecommendations, setSleepRecommendations] = useState<SleepRecommendation[]>([]);
+    const [dietRecommendations, setDietRecommendations] = useState<DietRecommendation[]>([]);
     const [refreshing, setRreshing] = useState(false);
+    const [score, setScore] = useState(0);
 
-
+    // console.log("session-id: ", sessionId);
     // This function send a get request to the target url (API endpoint)
     const { refetch: refetchRecommendations } = useQuery(
         ["fetch-recommendations"],
-        fetchRecommendations,
+        fetchRecommendations(sessionId),
         {
             onError: (err) => {
                 console.log("err:", err);
             },
             onSuccess: (data) => {
+                if (data.length === 0) {
+                    console.log("fetch failed!");
+                }
+
+                setExerciseRecommendations(data[0] as ExerciseRecommendation[]);
+                setSleepRecommendations(data[1] as SleepRecommendation[]);
+                setDietRecommendations(data[2] as DietRecommendation[]);
+            },
+        }
+    );
+
+
+    const { refetch: refetchLifestyleScore } = useQuery(
+        ["fetch-lifestylescore"],
+        fetchLifestyleScore(sessionId),
+        {
+            onError: (err) => {
+                console.log("score err:", err);
+            },
+            onSuccess: (data) => {
                 console.log(data);
+                setScore(data);
             },
         }
     );
@@ -41,6 +66,7 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
 
     const handleRefresh = () => {
         setRreshing(true);
+        refetchLifestyleScore();
         refetchRecommendations();
         setRreshing(false);
     };
@@ -48,11 +74,11 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
 
     return (
         <View style={styles.container}>
-            <TopBar username="Fake User" section="main" navigation={navigation} isTop />
-            <ScrollView 
-                contentContainerStyle={ styles.cardView }
+            <TopBar username="Feiyang" section="main" navigation={navigation} isTop />
+            <ScrollView
+                contentContainerStyle={styles.cardView}
                 refreshControl={
-                    <RefreshControl 
+                    <RefreshControl
                         refreshing={refreshing}
                         onRefresh={handleRefresh}
                     />
@@ -60,7 +86,7 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
             >
                 <View style={{ flex: 1, flexDirection: "row", width: "95%", marginTop: 10 }}>
                     <CircularProgress
-                        value={80}
+                        value={score * 100}
                         radius={100}
                         duration={3000}
                         inActiveStrokeOpacity={0.1}
@@ -70,7 +96,7 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
                         activeStrokeSecondaryColor={'#C25AFF'}
                     />
                     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                    <Text style={{ fontSize: 20 }}>Your Lifestyle Score</Text>
+                        <Text style={{ fontSize: 20 }}>Your Lifestyle Score</Text>
                     </View>
                 </View>
 
@@ -79,22 +105,22 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
                 </Text>
                 <RecommendationCard
                     title="Sleep"
-                    content="this is a test content to display"
                     iconName="weather-night"
+                    recommendations={sleepRecommendations}
                     color="#1EBAEA"
                     navigation={navigation}
                 />
                 <RecommendationCard
                     title="Exercise"
-                    content="this is a test content to display"
                     iconName="dumbbell"
+                    recommendations={exerciseRecommendations}
                     color="#FF9D00"
                     navigation={navigation}
                 />
                 <RecommendationCard
                     title="Diet"
-                    content="this is a test content to display"
                     iconName="food"
+                    recommendations={dietRecommendations}
                     color="#F9E770"
                     navigation={navigation}
                 />

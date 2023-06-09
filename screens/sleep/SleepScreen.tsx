@@ -6,6 +6,9 @@ import { Card, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootTabParamList } from "../../navigation/TabNavigator";
 import { timeToString } from "../../utils/helpers/time";
+import { useQuery } from "react-query";
+import { fetchPlanData } from "../../apiFunctions";
+import { User1 } from "../../utils/samples/sampleUsers";
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
@@ -16,8 +19,22 @@ interface SleepScreenNavigationProp<ScreenParams extends ParamListBase> {
 
 const SleepScreen = ({ navigation }: SleepScreenNavigationProp<RootTabParamList>) => {
     const insets = useSafeAreaInsets();
-    
+    const session = User1.session;
     const timeString = timeToString(new Date());
+
+
+    const {} = useQuery(
+        ["fetch-sleep"],
+        fetchPlanData({ session: session, type: "sleep" }),
+        {
+            onError: (err) => {
+                console.log("sleep err:", err);
+            },
+            onSuccess: (data) => {
+                console.log(data);
+            },
+        }
+    );
 
     
     return (

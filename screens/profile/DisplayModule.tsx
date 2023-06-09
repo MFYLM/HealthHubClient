@@ -8,6 +8,7 @@ import { Appbar, Text } from "react-native-paper";
 import { RootStackParamList } from "../../navigation/StackNavigator";
 import { NavigationProp, ParamListBase, RouteProp, useNavigation } from "@react-navigation/native";
 import { useQuery } from "react-query";
+import { fetchEventData } from "../../apiFunctions";
 
 
 interface DisplayModuleProps {
@@ -17,13 +18,20 @@ interface DisplayModuleProps {
 type DisplayModuleRouteProp = RouteProp<RootStackParamList, 'DisplayModule'>;
 
 // TODO: create map for data retrieving
-// const dataRangeMap = new Map<string, SetStateAction<any>>(
-//     ["D", set]
-// );
+const dataRangeMap = new Map<string, number>([
+    ["D", 1],
+    ["W", 7],
+    ["M", 30],
+    ["6M", 180],
+    ["Y", 360]
+]);
 
 
 const pageMap = new Map<string, string>([
-    ["Walking + Running Distance", ""]
+    ["Walking + Running Distance", "HKQuantityTypeIdentifierDistanceWalkingRunning"],
+    ["Flights Climbed", "HKQuantityTypeIdentifierFlightsClimbed"],
+    ["Sleep Duration", "HKCategoryTypeIdentifierSleepAnalysis"],
+    ["Energy Burned", "HKQuantityTypeIdentifierActiveEnergyBurned"],
 ]);
 
 const DisplayModule = ({ route }: { route: DisplayModuleRouteProp }) => {
@@ -63,13 +71,16 @@ const DisplayModule = ({ route }: { route: DisplayModuleRouteProp }) => {
         Math.random() * 100
     ]);
 
+    let fetchInput;
 
-    // const { refetch: refetchEventData } = useQuery(
-    //     ["fetch-event-data"],
+    // const { refetch: refreshEventData } = useQuery(
+    //     ["fetch-event"],
+    //     fetchEventData(),
     //     {
             
     //     }
     // );
+    
 
     useEffect(() => {
         console.log("rerender component");

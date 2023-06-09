@@ -7,9 +7,29 @@ interface Root {
 
 
 // Users
-export interface UserLoginInput extends Root {
+export interface ExerciseOption {
+    name: string;
+    trigger: boolean;
+};
+
+
+export interface UserSettings {
+    email: string,
+    sex: string,
+    weight: number,
+    height: number,
+    allowedExercises: ExerciseOption[]
+};
+
+
+export interface UserLoginInput {
     email: string;
     password: string;
+};
+
+export interface UserSessionData {
+    sessionId: string;
+    userId: string;
 };
 
 export interface UserSettingInput extends Root {
@@ -17,7 +37,7 @@ export interface UserSettingInput extends Root {
     data: any;
 };
 
-export interface UserSettingData extends Root {
+export interface UserSettingData {
     sex: string;
     weight: number;
 
@@ -28,24 +48,42 @@ export interface UserSettingData extends Root {
 export interface FetchEventInput extends Root {
     type: string;
     userId: string;
-    minTimeStamp: number;
-    maxTimeStamp: number;
+    eventCount: number;
 };
 
-export interface DataPoint extends Root {
+export interface DataPoint {
     timestamp: number;
     value: number;
 };
 
-export interface EventData extends Root {
-    data: DataPoint[];
+export interface FetchPlanParam extends Root {
+    type: string;
 };
 
 
-
 // Recommendation
-export interface Recommendation extends Root {
+export interface ExerciseRecommendation {
     type: string;
     name: string;
     duration: number;      // in seconds / minutes?
 };
+
+
+export interface SleepRecommendation {
+    type: string;
+    name: string;
+    duration: number;      // in seconds / minutes?
+};
+
+
+export interface DietRecommendation {
+    type: string;
+    name: string;
+    calories: number;
+};
+
+export interface choosePlanParam extends Root {
+    planName: string;
+    idealPlan: DietRecommendation | SleepRecommendation | ExerciseRecommendation;
+    chosenPlan: DietRecommendation | SleepRecommendation | ExerciseRecommendation;
+}
