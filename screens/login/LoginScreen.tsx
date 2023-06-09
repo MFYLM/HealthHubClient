@@ -27,14 +27,20 @@ const LoginScreen = ({ navigation }: LoginScreenNavigationProp<RootStackParamLis
             password: password,
         };
 
-        const res: UserSessionData = await loginUser(userinput);
+        setEmail("");
+        setPassword("");
+        navigation.navigate("Root");
+
+
+        // const res: UserSessionData = await loginUser(userinput);
 
         // if (res.sessionId === "" || res.userId === "") {
         //     console.log("invalid password or email combination!");
         // }
         // else {
+        //     console.log(res);
         //     await storeSession(res);
-        navigation.navigate("Root");
+        //     navigation.navigate("Root");
         // }
     };
 

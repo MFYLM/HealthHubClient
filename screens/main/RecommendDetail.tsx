@@ -1,12 +1,11 @@
 import { NavigationProp, ParamListBase, RouteProp, useNavigation } from "@react-navigation/native";
 import { View, StyleSheet } from "react-native";
 import { RootStackParamList } from "../../navigation/StackNavigator";
-import { Button, IconButton, Paragraph, Text } from "react-native-paper";
+import { Button, Card, IconButton, Paragraph, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import Checkbox from 'expo-checkbox';
 import { DietRecommendation, ExerciseRecommendation, SleepRecommendation, choosePlanParam } from "../../apiInterfaces";
-import { getSession } from "../../utils/helpers/session";
 import { useQuery } from "react-query";
 import { choosePlan } from "../../apiFunctions";
 import { User1 } from "../../utils/samples/sampleUsers";
@@ -63,11 +62,14 @@ const RecommendDetail = ({ route }: { route: RecommendDetailRouteProp }) => {
                 <IconButton size={30} icon={"arrow-left-thin"} onPress={() => navigation.goBack()} />
                 <Text style={{ marginRight: 100, fontSize: 25 }}>{`${category} Suggestions`}</Text>
             </View>
-            <View style={{ flexDirection: "column", justifyContent: "center", marginTop: 80 }}>
+            <View style={{ flexDirection: "column", marginTop: 100 }}>
                 {
                     recommendations.map((recommendation, index) => {
 
-                        return <View key={index} style={{ flexDirection: "row", alignItems: "center", height: 100, gap: 10 }}>
+                        return <View 
+                            key={index} 
+                            style={{ alignItems: "center", gap: 10, ...styles.optionView }}
+                        >
                             <Checkbox
                                 style={{ height: 30, width: 30 }}
                                 key={index}
@@ -92,7 +94,7 @@ const RecommendDetail = ({ route }: { route: RecommendDetailRouteProp }) => {
                                     setPlanParam(params);
                                 }}
                             />
-                            <Text>
+                            <Text style={{ fontSize: 20 }}>
                                 {
                                     recommendation.type === "meal" ?
                                         `${(recommendation as DietRecommendation).name} with ${(recommendation as DietRecommendation).calories} calories`
@@ -125,4 +127,16 @@ const styles = StyleSheet.create({
     checkbox: {
         margin: 8,
     },
+    optionView: {
+        height: 20,
+        borderRadius: 20,
+        flex: 1,
+        flexDirection: "row",
+        shadowColor: '#171717',
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        borderColor: "black",
+        maxHeight: 100
+    }
 });

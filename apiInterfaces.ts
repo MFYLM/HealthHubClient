@@ -60,6 +60,11 @@ export interface FetchPlanParam extends Root {
     type: string;
 };
 
+export interface PlanData {
+    scoreNumerator: number;
+    scoreDenominator: number;
+};
+
 
 // Recommendation
 export interface ExerciseRecommendation {

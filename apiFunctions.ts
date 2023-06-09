@@ -146,7 +146,14 @@ export const fetchPlanData = (params: FetchPlanParam) => async () => {
 
     const res = await axios.get(`${SERVER_HOST}/users/getplanscore`, { params: { "typeName": type }, headers });
 
-    console.log("plan score: ", res);
+    console.log("plan score: ", res.data);
+
+    let result = {
+        scoreDenominator: res.data["scoreDenominator"],
+        scoreNumerator: res.data["scoreNumerator"]
+    };
+
+    return result;
 };
 
 

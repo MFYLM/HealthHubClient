@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "react-query";
 import { fetchUserSettings, loginUser, logoutUser } from "../../apiFunctions";
 import { User1, User2 } from "../../utils/samples/sampleUsers";
 import { getSession } from "../../utils/helpers/session";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserSettings } from "../../apiInterfaces";
 
 
@@ -19,22 +19,22 @@ interface ProfileScreenNavigationProp<ScreenParams extends ParamListBase> {
 
 const ProfileScreen = ({ navigation }: ProfileScreenNavigationProp<RootStackParamList>) => {
     const insets = useSafeAreaInsets();
-    const session = User2.session;
+    const session = User1.session;
     const [settings, setSettings] = useState<UserSettings>({ email: "", sex: "", weight: 0, height: 0, allowedExercises: [] });
     const [refreshing, setRreshing] = useState(false);
 
-    const { } = useQuery(
-        ["fetch-session"],
-        getSession,
-        {
-            onError: (err) => {
-                console.log(err);
-            },
-            onSuccess: (data) => {
-                console.log("user session: ", data);
-            },
-        }
-    );
+    // const { } = useQuery(
+    //     ["fetch-session"],
+    //     getSession,
+    //     {
+    //         onError: (err) => {
+    //             console.log(err);
+    //         },
+    //         onSuccess: (data) => {
+    //             console.log("user session: ", data);
+    //         },
+    //     }
+    // );
 
     const { refetch: refetchUserInfo } = useQuery(
         ["fetch-userinfo"],
@@ -62,6 +62,11 @@ const ProfileScreen = ({ navigation }: ProfileScreenNavigationProp<RootStackPara
         }
     );
 
+
+    useEffect(() => {
+        refetchUserInfo();
+    }, []);
+
     
     const handleRefresh = () => {
         setRreshing(true);
@@ -82,7 +87,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenNavigationProp<RootStackPara
         >
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 30 }}>
                 <Text style={{ fontSize: 40, fontWeight: "bold" }}>Summary</Text>
-                <IconButton icon={"exit-to-app"} onPress={() => { handleLogout(); navigation.navigate("Login"); }}/>
+                <IconButton icon={"exit-to-app"} onPress={() => { navigation.navigate("Login"); }}/>
             </View>
             <List.Section style={{ gap: 10 }}>
                 <List.Item

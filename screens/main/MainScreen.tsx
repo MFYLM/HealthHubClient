@@ -5,11 +5,12 @@ import CircularProgress from "react-native-circular-progress-indicator";
 import { Text } from "react-native-paper";
 import { useQuery } from "react-query";
 import { fetchLifestyleScore, fetchRecommendations } from "../../apiFunctions";
-import { DietRecommendation, ExerciseRecommendation, SleepRecommendation } from "../../apiInterfaces";
+import { DietRecommendation, ExerciseRecommendation, SleepRecommendation, UserSessionData } from "../../apiInterfaces";
 import TopBar from "../../components/TopBar";
 import RecommendationCard from "../../components/main/RecommendatoinCard";
 import { RootStackParamList } from "../../navigation/StackNavigator";
-import { User1, User2 } from "../../utils/samples/sampleUsers";
+import { User1, User2, User3 } from "../../utils/samples/sampleUsers";
+import { getSession } from "../../utils/helpers/session";
 
 
 interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
@@ -19,7 +20,24 @@ interface MainScreenNavigationProp<ScreenParams extends ParamListBase> {
 
 const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>) => {
     // TODO: retrieve recommendations
-    const sessionId = User2.session;
+    const [sessionData, setSessionDate] = useState<UserSessionData>({ userId: "", sessionId: "" });
+
+    const { refetch: fetchSession } = useQuery(
+        ["fetch-session"],
+        getSession,
+        {
+            onError: (err) => {
+                
+            },
+            onSuccess: (data) => {
+                console.log("session data: ", data);
+                setSessionDate(data);
+            },
+        }
+    );
+
+
+    const sessionId = User1.session;
 
     const [exerciseRecommendations, setExerciseRecommendations] = useState<ExerciseRecommendation[]>([]);
     const [sleepRecommendations, setSleepRecommendations] = useState<SleepRecommendation[]>([]);
@@ -27,7 +45,6 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
     const [refreshing, setRreshing] = useState(false);
     const [score, setScore] = useState(0);
 
-    // console.log("session-id: ", sessionId);
     // This function send a get request to the target url (API endpoint)
     const { refetch: refetchRecommendations } = useQuery(
         ["fetch-recommendations"],

@@ -29,8 +29,8 @@ const RecommendationCard = (props: CardProps) => {
                     <IconButton icon={iconName} disabled size={60} />
                 </View>
                 <View style={{ flex: 3 }}>
-                    <Card.Content>
-                        <Text>{`${title}`}</Text>
+                    <Card.Content style={{ alignItems: "center", marginTop: 100 }}>
+                        <Text style={{ fontSize: 30 }}>{`${title}`}</Text>
                     </Card.Content>
                 </View>
             </View>
@@ -50,6 +50,11 @@ const styles = StyleSheet.create({
         height: 250,
         borderRadius: 20,
         flex: 1,
-        flexDirection: "row"
+        flexDirection: "row",
+        shadowColor: '#171717',
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.6,
+        shadowRadius: 6,
+        borderColor: "black"
     }
 });
