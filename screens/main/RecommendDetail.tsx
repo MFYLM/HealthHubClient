@@ -8,7 +8,7 @@ import Checkbox from 'expo-checkbox';
 import { DietRecommendation, ExerciseRecommendation, SleepRecommendation, choosePlanParam } from "../../apiInterfaces";
 import { useQuery } from "react-query";
 import { choosePlan } from "../../apiFunctions";
-import { User1 } from "../../utils/samples/sampleUsers";
+import { User1, User2 } from "../../utils/samples/sampleUsers";
 
 
 interface RecommendDetailNavigationProp<ScreenParams extends ParamListBase> {
@@ -24,6 +24,8 @@ const RecommendDetail = ({ route }: { route: RecommendDetailRouteProp }) => {
     const [planIndex, setPlanIndex] = useState(-1);
     const [checked, setChecked] = useState(new Array<boolean>(recommendations.length).fill(false));
     const [planParam, setPlanParam] = useState<choosePlanParam>({ session: "", planName: "", idealPlan: recommendations[0], chosenPlan: recommendations[0] });
+
+    const session = User1.session;
 
     const { refetch: selectPlan } = useQuery(
         ["select-plan"],
@@ -86,7 +88,7 @@ const RecommendDetail = ({ route }: { route: RecommendDetailRouteProp }) => {
                                     }
 
                                     const params: choosePlanParam = {
-                                        session: User1.session,
+                                        session: session,
                                         planName: recommendations[0].type,
                                         idealPlan: recommendations[0],
                                         chosenPlan: recommendations[index]

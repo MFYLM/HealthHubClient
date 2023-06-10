@@ -6,7 +6,7 @@ import { Surface } from "react-native-paper";
 import { RootStackParamList } from "../../navigation/StackNavigator";
 import { useMutation, useQuery } from "react-query";
 import { fetchUserSettings, loginUser, logoutUser } from "../../apiFunctions";
-import { User1, User2 } from "../../utils/samples/sampleUsers";
+import { User1, User2, User3, User4 } from "../../utils/samples/sampleUsers";
 import { getSession } from "../../utils/helpers/session";
 import { useEffect, useState } from "react";
 import { UserSettings } from "../../apiInterfaces";

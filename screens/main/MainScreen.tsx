@@ -9,7 +9,7 @@ import { DietRecommendation, ExerciseRecommendation, SleepRecommendation, UserSe
 import TopBar from "../../components/TopBar";
 import RecommendationCard from "../../components/main/RecommendatoinCard";
 import { RootStackParamList } from "../../navigation/StackNavigator";
-import { User1, User2, User3 } from "../../utils/samples/sampleUsers";
+import { User1, User2, User3, User4 } from "../../utils/samples/sampleUsers";
 import { getSession } from "../../utils/helpers/session";
 
 
@@ -36,8 +36,9 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
         }
     );
 
+    const user = User1;
 
-    const sessionId = User1.session;
+    const sessionId = user.session;
 
     const [exerciseRecommendations, setExerciseRecommendations] = useState<ExerciseRecommendation[]>([]);
     const [sleepRecommendations, setSleepRecommendations] = useState<SleepRecommendation[]>([]);
@@ -91,7 +92,7 @@ const MainScreen = ({ navigation }: MainScreenNavigationProp<RootStackParamList>
 
     return (
         <View style={styles.container}>
-            <TopBar username="Feiyang" section="main" navigation={navigation} isTop />
+            <TopBar username={user.name} section="main" navigation={navigation} isTop />
             <ScrollView
                 contentContainerStyle={styles.cardView}
                 refreshControl={

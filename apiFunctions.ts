@@ -1,6 +1,5 @@
 // define api functions here
 import { axios } from "./utils/axios";
-import { User1 } from "./utils/samples/sampleUsers";
 import {
     FetchEventInput, 
     ExerciseRecommendation, 

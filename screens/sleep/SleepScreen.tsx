@@ -8,7 +8,7 @@ import { RootTabParamList } from "../../navigation/TabNavigator";
 import { timeToString } from "../../utils/helpers/time";
 import { useQuery } from "react-query";
 import { fetchPlanData } from "../../apiFunctions";
-import { User1 } from "../../utils/samples/sampleUsers";
+import { User1, User2, User3, User4 } from "../../utils/samples/sampleUsers";
 import { PlanData } from "../../apiInterfaces";
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 
@@ -64,20 +64,20 @@ const SleepScreen = ({ navigation }: SleepScreenNavigationProp<RootTabParamList>
             <View style={{ alignItems: "center", gap: 40 }}>
                 <CircularProgressWithLegend progress={ planData.scoreNumerator / planData.scoreDenominator * 100 }/>
                 <Card style={{ backgroundColor: "#1EBAEA", height: 300, width: Dimensions.get('window').width - 20, flex: 1, flexDirection: "row" }}>
-                    <View style={{ flex: 1, margin: 30, flexDirection: "row", gap: 60 }}>
-                        <View style={{  }}>
-                            <Text style={{ fontSize: 20, fontWeight: "500", opacity: 0.5 }}>Time Slept</Text>
-                            <Text style={{ fontSize: 28, fontWeight: "700" }}>7h 12m</Text>
+                    <View style={{ flex: 1, margin: 30, flexDirection: "row", gap: 30 }}>
+                        <View style={{ justifyContent: "center", alignItems: "center" }}>
+                            <Text style={{ fontSize: 20, fontWeight: "500", opacity: 0.5 }}>Sleep Goal</Text>
+                            <Text style={{ fontSize: 28, fontWeight: "700" }}>{`${Math.floor(planData.scoreDenominator / 3600)}h ${Math.floor(planData.scoreDenominator % 3600 / 60) + 1}m`}</Text>
                         </View>
-                        <View style={{ marginHorizontal: 40 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "500", opacity: 0.5 }}>Time to bed</Text>
-                            <Text style={{ fontSize: 28, fontWeight: "700" }}>11:10pm</Text>
+                        <View style={{ marginHorizontal: 40, justifyContent: "center", alignItems: "center" }}>
+                            <Text style={{ fontSize: 20, fontWeight: "500", opacity: 0.5 }}>Actual Sleep Time</Text>
+                            <Text style={{ fontSize: 28, fontWeight: "700" }}>{`${Math.floor(planData.scoreNumerator / 3600)}h ${Math.floor(planData.scoreNumerator % 3600 / 60) + 1}m`}</Text>
                         </View>
                     </View>
-                    <View style={{ flex: 1, margin: 30, flexDirection: "row", gap: 60 }}>
-                        <View>
-                            <Text style={{ fontSize: 20, fontWeight: "500", opacity: 0.5 }}>Wake up</Text>
-                            <Text style={{ fontSize: 28, fontWeight: "700" }}>8:10m</Text>
+                    <View style={{ flex: 1, margin: 30, flexDirection: "row", gap: 30 }}>
+                        <View style={{ justifyContent: "center", alignItems: "center"  }}>
+                            <Text style={{ fontSize: 20, fontWeight: "500", opacity: 0.5 }}>Wakeup Time</Text>
+                            <Text style={{ fontSize: 28, fontWeight: "700" }}>8:00am</Text>
                         </View>
                         {/* <View style={{ marginHorizontal: 40 }}>
                             <Text style={{ fontSize: 20, fontWeight: "500", opacity: 0.5 }}>Wake up</Text>
